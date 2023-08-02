@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+<head>
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-mobile.js"></script>
+    <script type="text/javascript"
+            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDD353fOPh-KBUQ-2ekPCg75uxXRn0D9Tk&sensor=false"></script>
+    <meta charset="utf-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+    <title>Subject 00</title>
+</head>
+<body>
+<div class="loader" style="display: none;"></div>
+
+<!-- Start of Home page -->
+<div data-role="page" id="home">
+
+    <div data-role="header">
+        <div>
+            <h1 class="inline">Stats</h1>
+
+            <div class="settings_icon" class="inline"></div>
+        </div>
+    </div>
+
+    <div data-role="content">
+
+        <!-- <div id="progress"></div> -->
+        <table class="statisticsTable">
+            <tbody>
+            <tr>
+                <td class="half stat">
+                    <p id="total_average" class="block center">0 meters/sec</p>
+                    <img class="stat-icon" src="img/icons/stats_avg_pace.png"/>
+
+                    <p class="inline no-bottom">Average Pace</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="statisticsTable">
+            <tbody>
+            <tr>
+                <td class="half stat">
+                    <p id="total_duration" class="block center">0</p>
+                    <img class="inline stat-icon" src="img/icons/stats_total_durations.png"/>
+
+                    <p class="inline no-bottom">Total Duration</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="statisticsTable">
+            <tbody>
+            <tr>
+                <td class="half stat">
+                    <p id="total_runs" class="block center">0</p>
+                    <img class="inline stat-icon" src="img/icons/stats_total_runs.png"/>
+
+                    <p class="inline no-bottom">Total Runs</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- <button id="home_clearstorage_button">Clear local storage</button> -->
+    </div>
+
+    <div data-role="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a data-transition="none" data-icon="home">
+                    <div>Stats</div>
+                </a></li>
+                <li><a data-transition="none"
+                       data-icon="missions">
+                    <div>Missions</div>
+                </a></li>
+                <li><a data-transition="none" data-icon="star">
+                    <div>History</div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- End of Home page -->
+
+<!-- Mission Select page -->
+<div data-role="page" id="mission_select">
+
+    <div data-role="header">
+        <div>
+            <h1>Choose an Activity</h1>
+
+            <div class="settings_icon" class="inline"></div>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <div class="mission mission-play-button active">
+            <span class="list-number first-number">1</span>
+            <span class="push">Endurance</span>
+
+            <div class="mission1_status mission_status">
+                <!--<img src="img/icons/icons_checked.png"/>-->
+                <span class="next-arrow">&rsaquo;</span>
+            </div>
+        </div>
+
+        <div class="mission mission-play-button active">
+            <span class="list-number">2</span>
+            <span class="push">Speed</span>
+
+            <div class="mission2_status mission_status"><span class="next-arrow">&rsaquo;</span></div>
+        </div>
+
+    </div>
+
+    <div data-role="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a data-transition="none" data-icon="home">
+                    <div>Stats</div>
+                </a></li>
+                <li><a data-transition="none"
+                       data-icon="missions">
+                    <div>Missions</div>
+                </a></li>
+                <li><a data-transition="none" data-icon="star">
+                    <div>History</div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- End of Mission Select page -->
+
+<!-- Mission Options page -->
+<div data-role="page" id="mission_options">
+
+    <div data-role="header">
+        <div>
+            <h1 class="selected_mission"></h1>
+            <a href="#settings"><img class="settings_icon" class="inline" src="img/icons/settings.png"/></a>
+        </div>
+    </div>
+
+    <div data-role="content">
+
+        <div class="mission_options">
+
+            <table class="optionsTable" id="mission_brief">
+                <tbody>
+                <tr>
+                    <td class="stat">
+                        <p class="selected_mission mission_title"></p>
+                        <hr/>
+                        <p class="mission_description"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="optionsTable" id="select_duration_button">
+                <tbody>
+                <tr>
+                    <td class="stat align-left">
+                        <img class="stat-icon" src="img/icons/stats_total_durations.png"/>
+
+                        <p class="inline no-bottom">Duration</p>
+                        <a href="#" id="options_select_duration_label"
+                           class="selection option_button">(30/45/60)</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="optionsTable" id="select_music_button">
+                <tbody>
+                <tr>
+                    <td class="stat align-left">
+                        <img class="stat-icon" src="img/icons/select_playlist.png"/>
+
+                        <p class="inline no-bottom">Music</p>
+                        <a href="#" id="options_select_playlist"
+                           class="selection option_button arrow-white">&rsaquo;</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="start_mission">
+                <p>Start Mission</p>
+            </div>
+
+            <p style="display: none;" id="totalSongDuration"></p>
+
+        </div>
+    </div>
+
+    <div data-role="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a data-transition="none" data-icon="home">
+                    <div>Stats</div>
+                </a></li>
+                <li><a data-transition="none"
+                       data-icon="missions">
+                    <div>Missions</div>
+                </a></li>
+                <li><a data-transition="none" data-icon="star">
+                    <div>History</div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- End of Mission Options page -->
+
+<!-- Select Duration Options page -->
+<div data-role="page" id="options_select_duration">
+
+    <div data-role="header">
+        <div>
+            <h1>Select Duration</h1>
+            <a href="#settings"><img class="settings_icon" class="inline" src="img/icons/settings.png"/></a>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" id="mission_duration_options" class="mission_options">
+            <li>
+                <img class="table-row-icon" src="img/icons/Shoes_gray.png"/>
+                <a class='select_duration track_info history_by_mission' href='#'>30 min</a>
+            </li>
+            <li>
+                <img class="table-row-icon" src="img/icons/Shoes_gray.png"/>
+                <a class='select_duration track_info history_by_mission' href='#'>45 min</a>
+            </li>
+            <li>
+                <img class="table-row-icon" src="img/icons/Shoes_gray.png"/>
+                <a class='select_duration track_info history_by_mission' href='#'>60 min</a>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a data-transition="none" data-icon="home">
+                    <div>Stats</div>
+                </a></li>
+                <li><a data-transition="none"
+                       data-icon="missions">
+                    <div>Missions</div>
+                </a></li>
+                <li><a data-transition="none" data-icon="star">
+                    <div>History</div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- End of Select Duration Options page -->
+
+<!-- Mission Progress page -->
+<div data-role="page" id="mission_progress">
+
+    <!-- <div data-role="header">
+        <div>
+            <h1>Mission In Progress</h1>
+            <a href="#settings"><img class="settings_icon" class="inline" src="img/icons/settings.png" /></a>
+        </div>
+    </div> -->
+
+    <div data-role="content">
+
+        <script>
+
+
+        </script>
+
+        <div class="mission_progress">
+            <div class="row" id="mission_title">
+                <!-- <span id="current_mission"></span> -->
+            </div>
+            <div class="row">
+                <a id="options_current_song" href="#" class="selection">(Song Title)</a>
+            </div>
+            <div class="row" id="current_time">
+                <div>&nbsp;</div>
+            </div>
+            <div class="row" id="progress_row_music">
+                <span id="previous_song" href="#" class="selection">
+                    <img class="media_button" src="img/icons/music_player_back.png"/>
+                </span>
+                <span id="pause_song" href="#" class="selection">
+                    <img class="media_button" src="img/icons/music_player_pause.png"/>
+                </span>
+                <span id="play_song" href="#" class="selection">
+                    <img class="media_button" src="img/icons/music_player_play.png"/></span>
+                <span id="next_song" href="#" class="selection">
+                    <img class="media_button" src="img/icons/music_player_next.png"/>
+                </span>
+            </div>
+            <div class="row" id="current_time">
+                <div>&nbsp;</div>
+            </div>
+            <div class="row" id="current_time">
+                <div>&nbsp;</div>
+            </div>
+            <div class="row" id="current_time">
+                <div class="time-label">Time</div>
+                <span class="time-minutes">0:</span><span class="time-seconds">00</span>
+            </div>
+            <div class="row" id="current_time">
+                <div>&nbsp;</div>
+            </div>
+            <div class="row" id="distance-pace">
+                <div class="distace-label">
+                    <span class="label">Distance</span>
+
+                    <div class="distance"></div>
+                </div>
+                <div class="pace-label">
+                    <span class="label">Speed</span>
+
+                    <div class="pace"></div>
+                </div>
+            </div>
+            <div class="row bottom-buttons" id="progress_row_music">
+                <span id="stopMission">Stop</span>
+                <span id="pauseMission">Pause</span>
+                <span id="continueMission">Continue</span>
+
+                <div id="stopMissionConfirmation">
+                    <p class="center">Are you sure you want to stop the mission?</p>
+                    <span id="stopMission_no">No</span>
+                    <span id="stopMission_yes">Yes</span>
+                </div>
+            </div>
+            <div class="row" id="current_time">
+                <div>&nbsp;</div>
+            </div>
+            <div class="row" id="current_time">
+                <!-- <div id="loading">Starting Mission...</div> -->
+                <!-- <button class="start_mission" id="runProgress">Progress Start</button> -->
+            </div>
+            <div>
+                <div id="debugIn" style="color:#fff;"></div>
+                <div id="debugOut" style="color:#fff;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div data-role="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-transition="none" data-icon="home">Stats</a></li>
+                <li><a href="#mission_select" state="active" data-transition="none" data-icon="missions">Missions</a></li>
+                <li><a href="#history" data-transition="none" data-icon="star">History</a></li>
+            </ul>
+        </div>
+    </div> -->
+
+</div>
+<!-- End of Mission Progress page -->
+
+<!-- Start of the History page -->
+<div data-role="page" id="history">
+
+    <div data-role="header">
+        <div>
+            <h1>History</h1>
+            <a href="#settings"><img class="settings_icon" class="inline" src="img/icons/settings.png"/></a>
+
+            <div class="extended-header">
+                <button class="active" id="history_all" value="View All">View All</button>
+                <button id="history_by_mission" value="View by Mission">By Type</button>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="content" class="extended">
+        <!-- <p id="tracks_recorded"></p> -->
+        <ul data-role="listview" id="history_tracklist">
+        </ul>
+        <ul data-role="listview" id="history_by_mission_list">
+            <li>
+                <img class="table-row-icon" src="img/icons/Shoes_gray.png"/>
+                <a class='track_info history_by_mission' href='#' data-transition='slide'>Endurance</a>
+            </li>
+            <li>
+                <img class="table-row-icon" src="img/icons/Shoes_gray.png"/>
+                <a class='track_info history_by_mission' href='#' data-transition='slide'>Speed</a>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a data-transition="none" data-icon="home">
+                    <div>Stats</div>
+                </a></li>
+                <li><a data-transition="none"
+                       data-icon="missions">
+                    <div>Missions</div>
+                </a></li>
+                <li><a data-transition="none" data-icon="star">
+                    <div>History</div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- End History page -->
+
+<!-- Mission Info page -->
+<div data-role="page" id="track_info">
+
+    <div data-role="header" class="header-with-back">
+        <div style="position:relative;">
+            <div id="history_back_button">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                <span class="back-button-text">History</span>
+            </div>
+
+            <h1>Viewing Mission Statistics</h1>
+            <a href="#settings"><img class="settings_icon" class="inline" src="img/icons/settings.png"/></a>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <div id="map_canvas" style="position:absolute;bottom:0;left:0;width:100%;height:150px;"></div>
+        <!--<p id="track_info_info"></p>-->
+        <div id="track_results">
+            <ul>
+                <li>
+                    <p id="track_distance"></p>
+
+                    <p class="tile-label">Distance</p>
+                </li>
+                <li>
+                    <p id="track_duration"></p>
+
+                    <p class="tile-label">Duration</p>
+                </li>
+                <li>
+                    <p id="track_avg_pace"></p>
+
+                    <p class="tile-label">Avg Pace</p>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <ul data-role="listview" id="track_rows">
+                <li class="no-subtitle">
+                    <img class="table-row-icon" src="img/icons/elevation.png"/>
+                    <a class='track_info history_by_mission' href='#' data-transition='slide'>Elevation</a>
+
+                    <div id="track_elevation" class='table-row-right-label'></div>
+                </li>
+                <li class="no-subtitle">
+                    <img class="table-row-icon" src="img/icons/max_speed.png"/>
+                    <a class='track_info history_by_mission' href='#' data-transition='slide'>Max. Speed</a>
+
+                    <div id="track_max_speed" class='table-row-right-label'></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <button id="history_play_mission">Replay Mission</button>
+
+    <!--<div data-role="footer">-->
+    <!--<div data-role="navbar">-->
+    <!--<ul>-->
+    <!--<li><a data-transition="none" data-icon="home">-->
+    <!--<div>Stats</div>-->
+    <!--</a></li>-->
+    <!--<li><a data-transition="none"-->
+    <!--data-icon="missions">-->
+    <!--<div>Missions</div>-->
+    <!--</a></li>-->
+    <!--<li><a data-transition="none" data-icon="star">-->
+    <!--<div>History</div>-->
+    <!--</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+
+</div>
+<!-- End Mission Info page -->
+
+<!-- Start of Settings page -->
+<div data-role="page" id="settings">
+
+    <div data-role="header">
+        <div>
+            <h1 class="inline">Settings</h1>
+
+            <div id="settings_icon_active" class="inline"></div>
+        </div>
+    </div>
+
+    <!-- <div data-role="content">
+        <div class="mission">
+            <img id="duration_icon" class="inline" src="img/icons/select_duration.png" />
+            <p class="inline">Distance Unit</p>
+        </div>
+        <div class="mission1_status mission_status">Miles&nbsp;></div>
+        <div class="separator"></div>
+    </div> -->
+
+    <div data-role="content">
+        <ul data-role="listview" id="settings_rows">
+            <li class="no-subtitle" id="select_unit_button">
+                <img class="table-row-icon" src="img/icons/select_duration.png"/>
+                <a class='track_info history_by_mission' href='#' data-transition='slide'>Distance Unit
+                </a>
+
+                <div id="distance_unit" class='table-row-right-label'>
+                    <span id="currentUnit"></span>
+                    <span><img class="inline settings-icon" src="img/icons/settings_right_arrow.png"/></span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a data-transition="none" data-icon="home">
+                    <div>Stats</div>
+                </a></li>
+                <li><a data-transition="none"
+                       data-icon="missions">
+                    <div>Missions</div>
+                </a></li>
+                <li><a data-transition="none" data-icon="star">
+                    <div>History</div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- End of Settings page -->
+
+<!-- Start of Distance Unit page -->
+<div data-role="page" id="distance-unit-page">
+
+    <div data-role="header">
+        <div style="position:relative;">
+            <div id="settings_back_button">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                <span class="back-button-text">Settings</span>
+            </div>
+            <h1>Distance Unit</h1>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview">
+            <li class="select_distance_unit">
+                <img class="table-row-icon" src="img/icons/select_duration.png"/>
+                <a class='track_info history_by_mission' href='#'>Meters</a>
+            </li>
+            <li class="select_distance_unit">
+                <img class="table-row-icon" src="img/icons/select_duration.png"/>
+                <a class='track_info history_by_mission' href='#'>Kilometers</a>
+            </li>
+            <li class="select_distance_unit">
+                <img class="table-row-icon" src="img/icons/select_duration.png"/>
+                <a class='track_info history_by_mission' href='#'>MPH</a>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer">
+        <div data-role="navbar">
+            <ul>
+                <li><a data-transition="none" data-icon="home">
+                    <div>Stats</div>
+                </a></li>
+                <li><a data-transition="none"
+                       data-icon="missions">
+                    <div>Missions</div>
+                </a></li>
+                <li><a data-transition="none" data-icon="star">
+                    <div>History</div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!-- End of Distance Unit page -->
+
+<script type="text/javascript" src="phonegap.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/json2.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="js/circular-progress.js"></script>
+<script type="text/javascript" src="MyPlugin.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript">
+    if (!navigator.userAgent) navigator.userAgent = "User Agent String :: mozilla/5.0 (iphone; cpu iphone os 8_0_0 like mac os x) applewebkit/537.51.1 (khtml, like gecko) version/8.0 mobile/11a501 safari/9537.53";
+</script>
+<script type="text/javascript">
+    app.initialize();
+</script>
+</body>
+</html>
